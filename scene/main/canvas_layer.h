@@ -67,11 +67,14 @@ protected:
 	static void _bind_methods();
 
 public:
+
 	void set_layer(int p_xform);
 	int get_layer() const;
 
 	void set_transform(const Transform2D &p_xform);
 	Transform2D get_transform() const;
+
+	Transform2D get_global_transform() const;
 
 	void set_offset(const Vector2 &p_offset);
 	Vector2 get_offset() const;

@@ -56,6 +56,29 @@ Transform2D CanvasLayer::get_transform() const {
 	return transform;
 }
 
+Transform2D CanvasLayer::get_global_transform() const {
+
+	const Transform2D &local_transform = get_transform();
+
+	if (!follow_viewport) {
+		return local_transform;
+	}
+
+	// find parent transform
+	List<Viewport *> r_viewports;
+	vp->get_world_2d()->get_viewport_list(&r_viewports);
+	const auto parentCanvasId = vp->get_world_2d()->get_canvas();
+
+	for (int i = 0; i < r_viewports.size(); i++) {
+		if (parentCanvasId != r_viewports[i]->current_canvas) {
+			continue;
+		}
+		return local_transform * r_viewports[i]->get_canvas_transform();
+	}
+
+	return local_transform;
+}
+
 void CanvasLayer::_update_xform() {
 
 	transform.set_rotation_and_scale(rot, scale);

@@ -526,12 +526,13 @@ void Viewport::_notification(int p_what) {
 						uint64_t frame = get_tree()->get_frame();
 
 						Physics2DDirectSpaceState::ShapeResult res[64];
+
 						for (Set<CanvasLayer *>::Element *E = canvas_layers.front(); E; E = E->next()) {
 							Transform2D canvas_transform;
 							ObjectID canvas_layer_id;
 							if (E->get()) {
 								// A descendant CanvasLayer
-								canvas_transform = E->get()->get_transform();
+								canvas_transform = E->get()->get_global_transform();
 								canvas_layer_id = E->get()->get_instance_id();
 							} else {
 								// This Viewport's builtin canvas
